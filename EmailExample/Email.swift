@@ -15,10 +15,12 @@ class Email {
     let sender: String
     let subject: String
     let contents: String
+    let recipient: String
     
-    init(sender: String, subject: String, contents: String) {
+    init(sender: String, subject: String, contents: String, recipient: String) {
         self.sender = sender
         self.subject = subject
         self.contents = contents
+        self.recipient = recipient
     }
 }
