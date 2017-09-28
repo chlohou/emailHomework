@@ -22,19 +22,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let splitVC = self.window?.rootViewController as! UISplitViewController
         let navVC = splitVC.viewControllers.first as! UINavigationController
         let menuTVC = navVC.viewControllers[0] as! MenuTVC
+
+       
         
         let test = Email(sender: "asu@asu.edu", subject: "Spam", contents: "Spam", recipient: "chouliha@asu.edu")
         menuTVC.dataDictionary = ["Inbox":[Email(sender: "fellow.student@asu.edu", subject: "Project Question", contents: "Hi help me please", recipient: "chouliha@asu.edu")], "Sent":[Email(sender: "prof@asu.edu", subject: "Homework", contents: "Hi turn it in please", recipient: "chouliha@asu.edu")], "Trash":[Email(sender: "alert@asu.edu", subject: "Bees", contents: "Hi help me please there are bees", recipient: "chouliha@asu.edu")]]
         
-        /*
-        rootTVC.emails.append(Email(sender: "fellow.student@asu.edu", subject: "Project Question", contents: "Hi help me please"))
-        rootTVC.emails.append(Email(sender: "prof@asu.edu", subject: "Homework", contents: "Hi turn it in please"))
-        rootTVC.emails.append(Email(sender: "alert@asu.edu", subject: "Bees", contents: "Hi help me please there are bees"))
-        
         let detailVC = splitVC.viewControllers.last as! ViewController
         
-        rootTVC.delegate = detailVC
- */
+        menuTVC.cellDelegate = detailVC
+    //  menuTVC.delegate2 = menuVC
+        
+       // RootTVC.emails.append(Email(sender: "fellow.student@asu.edu", subject: "Project Question", contents: "Hi help me please"))
+       // RootTVC.emails.append(Email(sender: "prof@asu.edu", subject: "Homework", contents: "Hi turn it in please"))
+      //  RootTVC.emails.append(Email(sender: "alert@asu.edu", subject: "Bees", contents: "Hi help me please there are bees"))
+        
+        
+        
+ 
         
         return true
     }

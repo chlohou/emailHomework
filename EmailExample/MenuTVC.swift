@@ -8,10 +8,38 @@
 
 import UIKit
 
-class MenuTVC: UITableViewController {
+
+
+class MenuTVC: UITableViewController, MoveEmailsDelegate {
+
+    
+    func deleteMoveEmail(action: String, context: String, email: Email) {
+        switch action {
+        case "add":
+            var sentEmail = dataDictionary["Sent"]
+            sentEmail?.append(email)
+            dataDictionary["Sent"] = sentEmail
+        case "delete":
+            
+            var inboxEmails = dataDictionary["Inbox"]
+         //   inboxEmails?.remove(at: <#T##Int#>)
+            
+            var deletedEmail = dataDictionary["Trash"]
+            deletedEmail?.append(email)
+            dataDictionary["Trash"] = deletedEmail
+        default:
+            let hi=1
+        }
+    }
+
+    func addTapped() {
+        print("In add tapped")
+    }
     
     var dataDictionary: [String:Array<Email>] = [:]
     var selectedRow = ""
+    
+    var cellDelegate: CellSelectedDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +48,7 @@ class MenuTVC: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+       //  self.navigationItem.rightBarButtonItem = self.editButtonItem
         
     }
 
@@ -52,15 +80,21 @@ class MenuTVC: UITableViewController {
         return cell
     }
     
+    
+    //pressing the "button(cell)"
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //TODO: react to user selecting row
         //I want the detail view controller to update based on the row that I selected
         
         print("In didSelectRowAt")
-        //TODO: get cell information
+        // populating the emails
         let keywords = Array(dataDictionary.keys)
-        selectedRow = keywords[indexPath.row]
+       selectedRow = keywords[indexPath.row]
         print(selectedRow)
+        
+   /*
+       
+*/
         
         //call segue manually
         performSegue(withIdentifier: "cellSelected", sender: self)
@@ -112,6 +146,20 @@ class MenuTVC: UITableViewController {
         
         let destVC = segue.destination as! RootTVC
         destVC.emails = dataDictionary[selectedRow]!
+        destVC.delegate = self.cellDelegate
+        
+        destVC.context = selectedRow
+        
+        switch selectedRow {
+        case "Inbox" :
+            destVC.navigationItem.rightBarButtonItem = destVC.editButtonItem
+        case "Trash" :
+            destVC.navigationItem.rightBarButtonItem = nil
+        case "Sent" :
+            destVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        default:
+            print("hi")
+        }
         
         //1. which button got pressed
         //2. up-to-date data

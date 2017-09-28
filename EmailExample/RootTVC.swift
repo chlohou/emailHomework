@@ -12,19 +12,32 @@ protocol CellSelectedDelegate {
     func read(email: Email)
 }
 
+ protocol MoveEmailsDelegate {
+    func deleteMoveEmail(action: String, context: String, email: Email)
+    func addTapped()
+}
+
 class RootTVC: UITableViewController {
     
     var emails = [Email]()
     var delegate: CellSelectedDelegate?
+    var context = ""
 
+    func addTapped() {
+        print("Hello World")
+    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+       // self.navigationItem.rightBarButtonItem = self.editButtonItem
+       // self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,15 +57,18 @@ class RootTVC: UITableViewController {
         return emails.count
     }
     
+    
+    // should be loading contents of email in the detail VC *This may be working but I can't see it
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //TODO: react to user selecting row
         //I want the detail view controller to update based on the row that I selected
         
         let selectedEmail = emails[indexPath.row]
         delegate?.read(email: selectedEmail)
+        print(selectedEmail)
     }
 
-    
+    // displays email in the cells *This is working
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
@@ -63,14 +79,6 @@ class RootTVC: UITableViewController {
 
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
-            emails.remove(at: indexPath.row)
-            tableView.reloadData()
-        }
-    }
-    
 
     /*
     // Override to support conditional editing of the table view.
@@ -80,17 +88,24 @@ class RootTVC: UITableViewController {
     }
     */
 
-    /*
+    // Chloe written code to actually delete when delete button is pressed:
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+           let deletedEmail = emails.remove(at: indexPath.row)
+            
+            tableView.reloadData()
         } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+            let newEmail = Email(sender: "hi", subject: "hi", contents: "hi", recipient: "hi")
+     //       MoveEmailsDelegate?.deleteMoveEmail(action: "add", context: context, email: newEmail)
+        }
+        
+        // Here is probably where I want to add my emails
+        }
+    
+    
 
     /*
     // Override to support rearranging the table view.
