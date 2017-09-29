@@ -31,8 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         menuTVC.cellDelegate = detailVC
         
-    //  menuTVC.delegate2 = menuVC
-        
+        menuTVC.updateDelegate = menuTVC
        // RootTVC.emails.append(Email(sender: "fellow.student@asu.edu", subject: "Project Question", contents: "Hi help me please"))
        // RootTVC.emails.append(Email(sender: "prof@asu.edu", subject: "Homework", contents: "Hi turn it in please"))
       //  RootTVC.emails.append(Email(sender: "alert@asu.edu", subject: "Bees", contents: "Hi help me please there are bees"))

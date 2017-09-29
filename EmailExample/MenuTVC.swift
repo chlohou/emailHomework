@@ -17,6 +17,7 @@ class MenuTVC: UITableViewController, UpdateEmailsDelegate {
     var dataDictionary: [String:Array<Email>] = [:]
     var selectedRow = ""
     var cellDelegate: CellSelectedDelegate?
+    var updateDelegate: UpdateEmailsDelegate?
     
     
     func updateEmail(action: String, context: String, email: Email) {
