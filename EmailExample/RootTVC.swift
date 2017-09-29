@@ -12,9 +12,9 @@ protocol CellSelectedDelegate {
     func read(email: Email)
 }
 
- protocol MoveEmailsDelegate {
+ protocol UpdateEmailsDelegate {
     func deleteMoveEmail(action: String, context: String, email: Email)
-    func addTapped()
+    func addTapped(email: Email)
 }
 
 class RootTVC: UITableViewController {
@@ -23,10 +23,8 @@ class RootTVC: UITableViewController {
     var delegate: CellSelectedDelegate?
     var context = ""
 
-    func addTapped() {
-        print("Hello World")
-    }
-        
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

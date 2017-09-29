@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let splitVC = self.window?.rootViewController as! UISplitViewController
         let navVC = splitVC.viewControllers.first as! UINavigationController
         let menuTVC = navVC.viewControllers[0] as! MenuTVC
-
        
         
         let test = Email(sender: "asu@asu.edu", subject: "Spam", contents: "Spam", recipient: "chouliha@asu.edu")
@@ -31,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let detailVC = splitVC.viewControllers.last as! ViewController
         
         menuTVC.cellDelegate = detailVC
+        
     //  menuTVC.delegate2 = menuVC
         
        // RootTVC.emails.append(Email(sender: "fellow.student@asu.edu", subject: "Project Question", contents: "Hi help me please"))

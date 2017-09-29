@@ -31,7 +31,7 @@ class ViewController: UIViewController, CellSelectedDelegate {
         senderLabel.text = email.sender
         contentsLabel.text = email.contents
         recipientLabel.text = email.recipient
-        print("This works")
+    
     }
 }
 

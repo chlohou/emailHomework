@@ -10,9 +10,9 @@ import UIKit
 
 
 
-class MenuTVC: UITableViewController, MoveEmailsDelegate {
+class MenuTVC: UITableViewController, UpdateEmailsDelegate {
 
-    
+
     func deleteMoveEmail(action: String, context: String, email: Email) {
         switch action {
         case "add":
@@ -32,9 +32,13 @@ class MenuTVC: UITableViewController, MoveEmailsDelegate {
         }
     }
 
-    func addTapped() {
+    func addTapped(email: Email) {
+        var sentEmail = dataDictionary["Sent"]
+        sentEmail?.append(Email)
+        dataDictionary["Sent"] = sentEmail
         print("In add tapped")
     }
+
     
     var dataDictionary: [String:Array<Email>] = [:]
     var selectedRow = ""
