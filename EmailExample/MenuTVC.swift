@@ -12,38 +12,41 @@ import UIKit
 
 class MenuTVC: UITableViewController, UpdateEmailsDelegate {
 
-
+    var newEmail: Email?
+    var dataDictionary: [String:Array<Email>] = [:]
+    var selectedRow = ""
+    var cellDelegate: CellSelectedDelegate?
+    
+    
     func deleteMoveEmail(action: String, context: String, email: Email) {
+        
         switch action {
-        case "add":
+        case add:
             var sentEmail = dataDictionary["Sent"]
+            sentEmail
+        }
+        /*
+        var sentEmail = dataDictionary["Sent"]
             sentEmail?.append(email)
             dataDictionary["Sent"] = sentEmail
-        case "delete":
-            
             var inboxEmails = dataDictionary["Inbox"]
          //   inboxEmails?.remove(at: <#T##Int#>)
             
             var deletedEmail = dataDictionary["Trash"]
             deletedEmail?.append(email)
             dataDictionary["Trash"] = deletedEmail
-        default:
-            let hi=1
-        }
-    }
+     */
+    
 
     func addTapped(email: Email) {
         var sentEmail = dataDictionary["Sent"]
-        sentEmail?.append(Email)
+        sentEmail?.append(newEmail!)
         dataDictionary["Sent"] = sentEmail
         print("In add tapped")
     }
 
     
-    var dataDictionary: [String:Array<Email>] = [:]
-    var selectedRow = ""
-    
-    var cellDelegate: CellSelectedDelegate?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,7 +163,7 @@ class MenuTVC: UITableViewController, UpdateEmailsDelegate {
         case "Trash" :
             destVC.navigationItem.rightBarButtonItem = nil
         case "Sent" :
-            destVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            destVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: destVC, action: Selector(("addTapped:")))
         default:
             print("hi")
         }

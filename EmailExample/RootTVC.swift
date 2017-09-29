@@ -22,6 +22,7 @@ class RootTVC: UITableViewController {
     var emails = [Email]()
     var delegate: CellSelectedDelegate?
     var context = ""
+    var updateDelegate: UpdateEmailsDelegate?
 
     
     
@@ -97,7 +98,8 @@ class RootTVC: UITableViewController {
             tableView.reloadData()
         } else if editingStyle == .insert {
             let newEmail = Email(sender: "hi", subject: "hi", contents: "hi", recipient: "hi")
-     //       MoveEmailsDelegate?.deleteMoveEmail(action: "add", context: context, email: newEmail)
+            print(newEmail)
+            updateDelegate?.addTapped(email: newEmail)
         }
         
         // Here is probably where I want to add my emails
