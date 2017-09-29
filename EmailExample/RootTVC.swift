@@ -13,8 +13,7 @@ protocol CellSelectedDelegate {
 }
 
  protocol UpdateEmailsDelegate {
-    func deleteMoveEmail(action: String, context: String, email: Email)
-    func addTapped(email: Email)
+    func updateEmail(action: String, context: String, email: Email)
 }
 
 class RootTVC: UITableViewController {
@@ -23,7 +22,7 @@ class RootTVC: UITableViewController {
     var delegate: CellSelectedDelegate?
     var context = ""
     var updateDelegate: UpdateEmailsDelegate?
-
+    
     
     
     override func viewDidLoad() {
@@ -93,16 +92,22 @@ class RootTVC: UITableViewController {
         
         if editingStyle == .delete {
             
-           let deletedEmail = emails.remove(at: indexPath.row)
+           let removedEmail = emails.remove(at: indexPath.row)
+            print(indexPath.row)
+            updateDelegate?.updateEmail(action: "delete", context: context, email: removedEmail)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            print("I just updated delete delegate")
+            print(context)
+            print(removedEmail)
             
-            tableView.reloadData()
+            
         } else if editingStyle == .insert {
             let newEmail = Email(sender: "hi", subject: "hi", contents: "hi", recipient: "hi")
-            print(newEmail)
-            updateDelegate?.addTapped(email: newEmail)
+            updateDelegate?.updateEmail(action: "add", context: context, email: newEmail)
+            print("I just updated insert delegate")
         }
         
-        // Here is probably where I want to add my emails
+        
         }
     
     

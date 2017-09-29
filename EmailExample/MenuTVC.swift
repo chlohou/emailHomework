@@ -13,40 +13,38 @@ import UIKit
 class MenuTVC: UITableViewController, UpdateEmailsDelegate {
 
     var newEmail: Email?
+    var removedEmail: Email?
     var dataDictionary: [String:Array<Email>] = [:]
     var selectedRow = ""
     var cellDelegate: CellSelectedDelegate?
     
     
-    func deleteMoveEmail(action: String, context: String, email: Email) {
-        
+    func updateEmail(action: String, context: String, email: Email) {
         switch action {
-        case add:
+        case "add":
+            print("In add case")
             var sentEmail = dataDictionary["Sent"]
-            sentEmail
-        }
-        /*
-        var sentEmail = dataDictionary["Sent"]
-            sentEmail?.append(email)
+            sentEmail?.append(newEmail!)
             dataDictionary["Sent"] = sentEmail
+        case "delete":
+            print("In delete case")
             var inboxEmails = dataDictionary["Inbox"]
-         //   inboxEmails?.remove(at: <#T##Int#>)
-            
+            inboxEmails?.removeFirst()
             var deletedEmail = dataDictionary["Trash"]
-            deletedEmail?.append(email)
+            deletedEmail?.append(removedEmail!)
             dataDictionary["Trash"] = deletedEmail
-     */
-    
-
-    func addTapped(email: Email) {
-        var sentEmail = dataDictionary["Sent"]
-        sentEmail?.append(newEmail!)
-        dataDictionary["Sent"] = sentEmail
-        print("In add tapped")
+        default:
+            print("hello")
+        }
+        
     }
 
-    
-
+    func addTapped() {
+        var addEmail = dataDictionary["Sent"]
+        let newEmail = Email(sender: "hi", subject: "hi", contents: "hi", recipient: "hi")
+        addEmail?.append(newEmail)
+        dataDictionary["Sent"] = addEmail
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,7 +161,7 @@ class MenuTVC: UITableViewController, UpdateEmailsDelegate {
         case "Trash" :
             destVC.navigationItem.rightBarButtonItem = nil
         case "Sent" :
-            destVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: destVC, action: Selector(("addTapped:")))
+            destVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
         default:
             print("hi")
         }
