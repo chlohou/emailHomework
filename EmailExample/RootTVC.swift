@@ -13,7 +13,7 @@ protocol CellSelectedDelegate {
 }
 
  protocol UpdateEmailsDelegate {
-    func updateEmail(action: String, context: String, email: Email)
+    func updateEmail(action: String, email: Email)
 }
 
 class RootTVC: UITableViewController {
@@ -63,7 +63,6 @@ class RootTVC: UITableViewController {
         
         let selectedEmail = emails[indexPath.row]
         delegate?.read(email: selectedEmail)
-        print(selectedEmail)
     }
 
     // displays email in the cells *This is working
@@ -78,32 +77,34 @@ class RootTVC: UITableViewController {
         return cell
     }
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
 
     // Chloe written code to actually delete when delete button is pressed:
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            
-           let removedEmail = emails.remove(at: indexPath.row)
+            let removedEmail = emails[indexPath.row]
+            updateDelegate?.updateEmail(action: "delete", email: removedEmail) // should move to the delegate and run code in the delegate but I could not get this to work
+            emails.remove(at: indexPath.row)
             print(indexPath.row)
-            updateDelegate?.updateEmail(action: "delete", context: context, email: removedEmail)
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
             print("I just updated delete delegate")
-            print(context)
             print(removedEmail)
+            
+            
             
             
         } else if editingStyle == .insert {
             let newEmail = Email(sender: "hi", subject: "hi", contents: "hi", recipient: "hi")
-            updateDelegate?.updateEmail(action: "add", context: context, email: newEmail)
+            updateDelegate?.updateEmail(action: "add", email: newEmail) // should move to the delegate but doesn't work
             print("I just updated insert delegate")
         }
         

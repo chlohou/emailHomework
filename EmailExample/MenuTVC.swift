@@ -20,7 +20,7 @@ class MenuTVC: UITableViewController, UpdateEmailsDelegate {
     var updateDelegate: UpdateEmailsDelegate?
     
     
-    func updateEmail(action: String, context: String, email: Email) {
+    func updateEmail(action: String, email: Email) {
         switch action {
         case "add":
             print("In add case")
@@ -40,12 +40,7 @@ class MenuTVC: UITableViewController, UpdateEmailsDelegate {
         
     }
 
-    func addTapped() {
-        var addEmail = dataDictionary["Sent"]
-        let newEmail = Email(sender: "hi", subject: "hi", contents: "hi", recipient: "hi")
-        addEmail?.append(newEmail)
-        dataDictionary["Sent"] = addEmail
-    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,7 +157,7 @@ class MenuTVC: UITableViewController, UpdateEmailsDelegate {
         case "Trash" :
             destVC.navigationItem.rightBarButtonItem = nil
         case "Sent" :
-            destVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+            destVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: destVC, action: nil) // wanted to be able to set editing style to .insert so it would run through those commands in the RootVC but am unsure how to do so
         default:
             print("hi")
         }
